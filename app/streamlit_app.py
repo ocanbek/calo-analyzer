@@ -95,27 +95,40 @@ def render_sample_inputs(df: pd.DataFrame, column_config: ColumnConfig) -> Sampl
     col1, col2, col3 = st.columns(3)
     with col1:
         cement_mass_g = st.number_input(
-            "Cement mass (g)", min_value=0.0, value=DEFAULT_CEMENT_MASS_G, step=0.1
+            "Cement mass (g)",
+            min_value=0.001,
+            value=float(DEFAULT_CEMENT_MASS_G),
+            step=0.1,
         )
     with col2:
         integration_start_h = st.number_input(
-            "Integration start time (h)", min_value=0.0, value=DEFAULT_INTEGRATION_START_H, step=0.1
+            "Integration start time (h)",
+            min_value=0.0,
+            value=float(DEFAULT_INTEGRATION_START_H),
+            step=0.1,
         )
     with col3:
         plot_max_h = st.number_input(
-            "Plot time-window max (h)", min_value=0.0, value=float(default_plot_max_h), step=1.0
+            "Plot time-window max (h)",
+            min_value=0.0,
+            value=float(default_plot_max_h),
+            step=1.0,
         )
 
     return SampleConfig(
-        cement_mass_g=cement_mass_g,
-        integration_start_h=integration_start_h,
-        plot_max_h=plot_max_h,
+        cement_mass_g=float(cement_mass_g),
+        integration_start_h=float(integration_start_h),
+        plot_max_h=float(plot_max_h),
     )
 
 
 def run_processing(
     raw_df: pd.DataFrame, column_config: ColumnConfig, sample_config: SampleConfig
 ) -> ProcessingResult | None:
+    if sample_config.cement_mass_g <= 0:
+        st.error(f"Cement mass must be positive, got {sample_config.cement_mass_g}.")
+        return None
+
     try:
         result = process_calorimetry_data(
             raw_df,
