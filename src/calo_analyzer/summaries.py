@@ -63,7 +63,9 @@ def interpolate_at(time_h: np.ndarray, values: np.ndarray, target_h: float) -> f
     return float(v0 + frac * (v1 - v0))
 
 
-def summarize_cumulative_heat(time_h: np.ndarray, cumulative_heat: np.ndarray) -> CumulativeHeatSummary:
+def summarize_cumulative_heat(
+    time_h: np.ndarray, cumulative_heat: np.ndarray
+) -> CumulativeHeatSummary:
     """Summarize cumulative heat at 24 h, 48 h, and the final valid point."""
     valid_time, valid_values = _valid_sorted(time_h, cumulative_heat)
 

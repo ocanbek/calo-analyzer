@@ -1,4 +1,3 @@
-from calo_analyzer.units import convert_heat_flow_to_mw, convert_time_to_hours
 from calo_analyzer.integration import cumulative_heat_trapezoidal
 from calo_analyzer.processing import (
     ProcessingResult,
@@ -11,6 +10,7 @@ from calo_analyzer.summaries import (
     interpolate_at,
     summarize_cumulative_heat,
 )
+from calo_analyzer.units import convert_heat_flow_to_mw, convert_time_to_hours
 
 __all__ = [
     "convert_heat_flow_to_mw",

@@ -1,4 +1,4 @@
-# calo-analyzer
+# Calo-Analyzer
 
 A small Streamlit app for analyzing isothermal calorimetry data from cement
 hydration measurements: upload raw heat-flow data, normalize it by cement

@@ -11,7 +11,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from calo_analyzer.processing import ProcessingResult, load_raw_file, process_calorimetry_data, select_columns
+from calo_analyzer.processing import (
+    ProcessingResult,
+    load_raw_file,
+    process_calorimetry_data,
+    select_columns,
+)
 from calo_analyzer.summaries import summarize_cumulative_heat
 from calo_analyzer.units import DEFAULT_HEAT_FLOW_UNIT, DEFAULT_TIME_UNIT, HeatFlowUnit, TimeUnit
 
@@ -79,7 +84,7 @@ def render_column_and_unit_selection(df: pd.DataFrame) -> ColumnConfig:
 
 
 def _estimate_max_time_h(df: pd.DataFrame, column_config: ColumnConfig) -> float | None:
-    """Best-effort estimate of the data's max time in hours, used only to default the plot-max input."""
+    """Best-effort estimate of the data's max time in hours, used to default the plot-max input."""
     time_numeric = pd.to_numeric(df[column_config.time_col], errors="coerce").dropna()
     if time_numeric.empty:
         return None
@@ -145,7 +150,8 @@ def run_processing(
 
     if result.dropped_rows > 0:
         st.warning(
-            f"Dropped {result.dropped_rows} row(s) with missing or non-numeric time/heat-flow values."
+            f"Dropped {result.dropped_rows} row(s) with missing or non-numeric time/heat-flow "
+            "values."
         )
     if result.was_sorted:
         st.warning("Input data was not sorted by time; it has been sorted automatically.")
